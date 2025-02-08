@@ -1,0 +1,40 @@
+2025/2/6 4:00
+character类
+    添加：
+        function：update_position()：更新角色的位置
+        function：update_scale()：更新角色的缩放比例
+        function：animation()：播放动画线程池
+        属性：添加备份属性以便快速恢复状态
+        animate：靠近，平常和远离
+    bug修复：
+        靠近时所有动作的比例参数
+        角色移动时无法跟随屏幕大小刷新而改变
+
+scene类
+    添加：
+        animate：振动效果
+    bug修复：
+        振动效果导致的部分场景width不够
+        修复方法：调整父类的auto_fit方法
+
+UI类
+    继承
+        aris_studio类
+    添加
+        普通颜色的UI，图片类型的UI
+
+
+2025/2/7 4:00
+UI类
+    添加：
+        function：draw() 绘制UI
+
+2025/2/8 4:00
+UI类
+    修改：
+        alpha渐变UI
+
+2025/2/9 4:00
+UI类
+    添加：
+

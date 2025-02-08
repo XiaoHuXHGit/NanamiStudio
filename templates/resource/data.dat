@@ -1,0 +1,1 @@
+azusa = Character("azusa_normal.png", (255, 255, 255), 16, "", (-70, 0), 2)
