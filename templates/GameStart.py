@@ -7,11 +7,12 @@ from items.UI import UI
 from items.Image import Image
 from items.Scene import Scene
 from items.Character import Character
-from templates.items.ArisStudio import ArisStudio
+from templates.items.NanamiStudio import NanamiStudio
 
 # ======================================== game initialization ========================================
 # 初始化pygame
 pygame.init()
+pygame.font.init()
 
 # 设置窗口
 # 设置游戏分辨率
@@ -30,9 +31,9 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREY = (100, 100, 100)
 
-character = Character(screen, 'assets/images/azusa_happy.png', position=(-70, -65), scale=2, zoom_mode=ArisStudio.FILL)
-scene = Scene(screen, 'assets/images/scene.png', position=(0, 0), scale=1, zoom_mode=ArisStudio.ADAPT)
-ui = UI(screen, '#eebefa', position=(0, 200), scale=0.4)
+character = Character(screen, 'assets/images/azusa_happy.png', font_color='#9775fa', position=(-70, -65), scale=2, zoom_mode=NanamiStudio.FILL)
+scene = Scene(screen, 'assets/images/scene.png', position=(0, 0), scale=1, zoom_mode=NanamiStudio.ADAPT)
+ui = UI(screen, '#eebefa', position=(0, 0), scale=0.4, alpha=155, alignment=UI.BOTTOM)
 
 
 def keyboard_event(event: pygame.event.Event):
@@ -103,7 +104,7 @@ def mouse_event(event: pygame.event.Event):
 def refresh_screen():
     scene.update(screen)  # 场景重新渲染
     character.update(screen)  # 角色重新渲染
-    ui.update(screen)
+    ui.update(screen, message="请和我交往吧！", fontcolor=character.font_color)  # UI重新渲染
 
 
 def run():

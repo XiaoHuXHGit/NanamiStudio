@@ -37,4 +37,4 @@ UI类
 2025/2/9 4:00
 UI类
     添加：
-
+        function: message() 显示文字

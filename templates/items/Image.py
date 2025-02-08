@@ -1,6 +1,6 @@
-from templates.items.ArisStudio import ArisStudio
+from templates.items.NanamiStudio import NanamiStudio
 
 
-class Image(ArisStudio):
+class Image(NanamiStudio):
     def __init__(self, screen, src, position, scale):
         super().__init__(screen, src, position, scale)

@@ -4,11 +4,11 @@ import time
 
 import pygame
 
-from templates.items.ArisStudio import ArisStudio
+from templates.items.NanamiStudio import NanamiStudio
 
 
 # 参数分别是：屏幕，图片路径，字体颜色，字体大小，字体，位置，缩放比例
-class Character(ArisStudio):
+class Character(NanamiStudio):
     ANIMATE_JITTER = 0  # 抖动动画
     ANIMATE_SHAKE = 1  # 摇晃动画
     ANIMATE_MOVE = 2  # 移动动画
@@ -28,7 +28,7 @@ class Character(ArisStudio):
 
     def __init__(self, screen: pygame.Surface, image: str, font_color: tuple[int, int, int] | str = (255, 255, 255),
                  font_size: int = 20, font: pygame.font.Font = "", position: tuple[float | int, float | int] = (0, 0),
-                 scale: float = 1, zoom_mode: int = ArisStudio.FILL):
+                 scale: float = 1, zoom_mode: int = NanamiStudio.FILL):
         super().__init__(screen, image, position, scale, zoom_mode)
         self.font_color = font_color  # 字体颜色
         self.font_size = font_size  # 字体大小
@@ -205,7 +205,7 @@ class Character(ArisStudio):
         self.scale = self.default_scale
         self.animation_step = self.default_animation_step
 
-    def update(self, screen, zoom_mode=ArisStudio.FILL):
+    def update(self, screen, zoom_mode=NanamiStudio.FILL):
         # 屏幕更新
         self.screen = screen
         self.auto_fit()
