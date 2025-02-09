@@ -11,3 +11,4 @@ class SystemConfig(object):
     title = 'Airs Studio'
     assets_folder = 'assets'
     icon = 'assets/images/icon.png'
+    window_aspect_ratio_lock = True

@@ -18,6 +18,7 @@ class UI(NanamiStudio):
         self.alpha = alpha
         self.alignment = alignment
         self.blur_radius = blur_radius
+        self.vertical_position = 0
         self.resolution_adjust()
         self.blur_top()
 
@@ -66,32 +67,38 @@ class UI(NanamiStudio):
 
         self.window_image = pygame.transform.scale(self.image, (
             int(screen_width), int(screen_height * self.scale)))
-
         # 更新图片的位置以适应屏幕
         new_image_width, new_image_height = self.window_image.get_size()
-        vertical_position = screen_height - new_image_height
         if self.alignment == self.TOP:
-            vertical_position = 0
+            self.vertical_position = 0
         elif self.alignment == self.CENTER:
-            vertical_position = (screen_height - new_image_height) // 2
+            self.vertical_position = (screen_height - new_image_height) // 2
         elif self.alignment == self.BOTTOM:
-            vertical_position = vertical_position
-        self.image_rect.update(self.position[0], vertical_position + self.position[1], 0, 0)
+            self.vertical_position = screen_height - new_image_height
+        self.image_rect.update(self.position[0], self.vertical_position + self.position[1], 0, 0)
 
-    def message(self, message, fontcolor, fontsize, fontname):
+    def message(self, message, fontcolor, fontsize, fontname, scale=0.018):
         """
         这个方法用于在屏幕上显示文字。
         :param message: 要显示的文字。
         :param fontcolor: 文字颜色。
         :param fontsize: 文字大小。
         :param fontname: 字体名称。
+        :param scale: 文字缩放比例。
         :return: 处理后的 pygame 图像对象。
         """
+        screen_width, screen_height = self.screen.get_size()
+        diagonal_length = (screen_width ** 2 + screen_height ** 2) ** 0.5
+        virtual_pixel = min(screen_width, screen_height) / diagonal_length
+        if isinstance(fontsize, str) and '%' in fontsize:
+            fontsize = int(eval(fontsize.replace('%', '')) / 100 * diagonal_length * scale)
+        print(int(fontsize * virtual_pixel))
         # 加载字体
         font = pygame.font.Font(fontname, fontsize)
         # 绘制文字
         text_surface = font.render(message, True, fontcolor)
         text_rect = text_surface.get_rect()
+        text_rect.update(self.position[0], self.vertical_position + self.position[1], 0, 0)
         return text_surface, text_rect
 
     def update(self, screen, message=None, fontcolor=(0, 0, 0), fontsize=50,

@@ -17,6 +17,8 @@ pygame.font.init()
 # 设置窗口
 # 设置游戏分辨率
 window_width, window_height = SystemConfig.window_width, SystemConfig.window_height
+window_width_copy, window_height_copy = window_width, window_height
+window_scale = window_height / window_width
 with open('resource/config.json', 'r') as config:
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if json.load(config)[
         'fullscreen'] else pygame.display.set_mode((window_width, window_height), pygame.RESIZABLE)
@@ -33,7 +35,7 @@ GREY = (100, 100, 100)
 
 character = Character(screen, 'assets/images/azusa_happy.png', font_color='#9775fa', position=(-70, -65), scale=2, zoom_mode=NanamiStudio.FILL)
 scene = Scene(screen, 'assets/images/scene.png', position=(0, 0), scale=1, zoom_mode=NanamiStudio.ADAPT)
-ui = UI(screen, '#eebefa', position=(0, 0), scale=0.4, alpha=155, alignment=UI.BOTTOM)
+ui = UI(screen, '#eebefa', position=(0, 0), scale=0.24, alpha=155, alignment=UI.BOTTOM)
 
 
 def keyboard_event(event: pygame.event.Event):
@@ -104,10 +106,11 @@ def mouse_event(event: pygame.event.Event):
 def refresh_screen():
     scene.update(screen)  # 场景重新渲染
     character.update(screen)  # 角色重新渲染
-    ui.update(screen, message="请和我交往吧！", fontcolor=character.font_color)  # UI重新渲染
+    ui.update(screen, message="和我在一起吧！小狐老师！", fontcolor=character.font_color, fontsize='100%')  # UI重新渲染
 
 
 def run():
+    global screen
     screen.fill(WHITE)
     # 游戏循环
     running = True
@@ -119,6 +122,15 @@ def run():
                 keyboard_event(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_event(event)
+            elif event.type == pygame.WINDOWRESIZED and SystemConfig.window_aspect_ratio_lock:
+                screen_width, screen_height = screen.get_size()
+                # 计算缩放比例
+                scale = min(screen_width / window_width_copy, screen_height / window_height_copy)
+                # 根据缩放比例调整屏幕尺寸
+                new_width = int(window_width_copy * scale)
+                new_height = int(window_height_copy * scale)
+                # 设置新的屏幕模式
+                screen = pygame.display.set_mode((new_width, new_height), pygame.RESIZABLE)
 
         refresh_screen()  # 重新渲染
         pygame.display.flip()
